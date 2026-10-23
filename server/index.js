@@ -23,7 +23,8 @@ const simulateur = require('./simulateur');
 const { genererConseils } = require('./conseils');
 
 // Étapes qui nécessitent une action du serveur humain (pas automatisées)
-const ETAPES_SERVEUR = new Set(['COMMANDE', 'ADDITION']);
+// DESSERT_SERVI est déclenché par le web → B programme DESSERT_RETIRE automatiquement
+const ETAPES_SERVEUR = new Set(['COMMANDE', 'DESSERT_SERVI', 'ADDITION']);
 
 const PORT = process.env.PORT || 3001;
 
