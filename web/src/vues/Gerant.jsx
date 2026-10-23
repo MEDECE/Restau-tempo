@@ -248,7 +248,7 @@ function PanneauDetail({ tableId, snapshot, onAction, onAttendre, onFermer }) {
               background: 'transparent', color: '#22C55E', textAlign: 'left',
             }}
           >
-            ↺ Attendre encore 10 min
+            ↺ Attendre encore
           </button>
         </>
       )}
