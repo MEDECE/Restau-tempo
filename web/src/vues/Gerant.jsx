@@ -337,7 +337,7 @@ export default function Gerant({ snapshot, envoyer, connecte }) {
 
       {/* En-tête */}
       <div style={S.header}>
-        <h1 style={S.titre}>TableFlow — Gérant</h1>
+        <h1 style={S.titre}>Restau-Tempo</h1>
         <span style={S.badge(connecte)}>{connecte ? '● En direct' : '○ Hors ligne'}</span>
       </div>
 
