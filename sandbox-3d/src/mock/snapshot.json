@@ -1,0 +1,26 @@
+{
+  "kind": "snapshot",
+  "simTime": 1792751400000,
+  "vitesse": 60,
+  "tables": [
+    {"id": "T1", "numero": 1, "capacite": 2, "forme": "ronde", "x": -3, "z": -2},
+    {"id": "T2", "numero": 2, "capacite": 2, "forme": "ronde", "x": -3, "z": 2},
+    {"id": "T3", "numero": 3, "capacite": 4, "forme": "carree", "x": 0.5, "z": -2},
+    {"id": "T4", "numero": 4, "capacite": 4, "forme": "carree", "x": 0.5, "z": 2},
+    {"id": "T5", "numero": 5, "capacite": 6, "forme": "rectangle", "x": 4, "z": -2},
+    {"id": "T6", "numero": 6, "capacite": 4, "forme": "carree", "x": 4, "z": 2}
+  ],
+  "visites": [
+    {"id": "V21", "tableId": "T2", "nbPersonnes": 2, "statut": "INSTALLATION", "etapes": {"ARRIVEE": 1792751100000, "INSTALLATION": 1792751160000}},
+    {"id": "V17", "tableId": "T3", "nbPersonnes": 4, "statut": "COMMANDE", "etapes": {"ARRIVEE": 1792749480000, "INSTALLATION": 1792749540000, "COMMANDE": 1792750080000}},
+    {"id": "V18", "tableId": "T4", "nbPersonnes": 3, "statut": "PLAT_SERVI", "etapes": {"ARRIVEE": 1792749000000, "INSTALLATION": 1792749060000, "COMMANDE": 1792749420000, "PLAT_SERVI": 1792750680000}},
+    {"id": "V15", "tableId": "T5", "nbPersonnes": 6, "statut": "PLAT_RETIRE", "etapes": {"ARRIVEE": 1792747680000, "INSTALLATION": 1792747740000, "COMMANDE": 1792748160000, "PLAT_SERVI": 1792749120000, "PLAT_RETIRE": 1792751040000}},
+    {"id": "V14", "tableId": "T6", "nbPersonnes": 4, "statut": "DESSERT_SERVI", "etapes": {"ARRIVEE": 1792747200000, "INSTALLATION": 1792747260000, "COMMANDE": 1792747620000, "PLAT_SERVI": 1792748580000, "PLAT_RETIRE": 1792750380000, "DESSERT_SERVI": 1792751100000}},
+    {"id": "V22", "tableId": null, "nbPersonnes": 5, "statut": "ARRIVEE", "etapes": {"ARRIVEE": 1792751220000}}
+  ],
+  "historique": [
+    {"id": "V12", "tableId": "T1", "nbPersonnes": 2, "statut": "DEPART", "etapes": {"ARRIVEE": 1792745700000, "INSTALLATION": 1792745760000, "COMMANDE": 1792746120000, "PLAT_SERVI": 1792747080000, "PLAT_RETIRE": 1792748700000, "ADDITION": 1792749000000, "DEPART": 1792749300000}},
+    {"id": "V11", "tableId": "T3", "nbPersonnes": 4, "statut": "DEPART", "etapes": {"ARRIVEE": 1792744800000, "INSTALLATION": 1792744860000, "COMMANDE": 1792745280000, "PLAT_SERVI": 1792746300000, "PLAT_RETIRE": 1792747800000, "DESSERT_SERVI": 1792748280000, "DESSERT_RETIRE": 1792748940000, "ADDITION": 1792749180000, "DEPART": 1792749420000}},
+    {"id": "V10", "tableId": "T6", "nbPersonnes": 3, "statut": "DEPART", "etapes": {"ARRIVEE": 1792744200000, "INSTALLATION": 1792744440000, "COMMANDE": 1792744800000, "PLAT_SERVI": 1792745640000, "PLAT_RETIRE": 1792747200000, "DESSERT_SERVI": 1792747680000, "DESSERT_RETIRE": 1792748340000, "ADDITION": 1792748640000, "DEPART": 1792748940000}}
+  ]
+}
