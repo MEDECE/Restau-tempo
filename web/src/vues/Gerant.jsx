@@ -103,7 +103,7 @@ function PanneauDetail({ tableId, snapshot, onAction, onAttendre, onFermer }) {
       onClick={e => e.stopPropagation()}
       style={{
         position: 'absolute',
-        top: 16, bottom: 16, left: 24,
+        top: 16, bottom: 16, right: 24,
         zIndex: 200,
         width: 290,
         background: 'rgba(255,255,255,0.97)',
