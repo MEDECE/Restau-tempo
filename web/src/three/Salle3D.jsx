@@ -20,21 +20,14 @@ const COULEUR_PIED    = '#5C3A14'
 const COULEUR_CHAISE  = '#D6C8B0'  // beige clair neutre
 const COULEUR_TAPIS   = '#2E1A08'
 
-// ─── Palette par statut — ni trop vive ni trop lavée ─────────────────────────
-const COULEUR_STATUT = {
-  LIBRE:          '#D1D5DB', // gris
-  INSTALLATION:   '#93C5FD', // bleu moyen
-  COMMANDE:       '#FCD34D', // jaune moyen
-  PLAT_SERVI:     '#6EE7B7', // vert moyen
-  PLAT_RETIRE:    '#5EEAD4', // turquoise moyen
-  DESSERT_SERVI:  '#4ADE80', // vert vif (dessert)
-  DESSERT_RETIRE: '#F9A8D4', // rose moyen
-  ADDITION:       '#FDBA74', // orange moyen
-}
+// ─── Palette chrono (30 min vert → 10 min orange → rouge) ────────────────────
+const COULEUR_LIBRE   = '#D1D5DB'  // gris — table vide
+const COULEUR_VERT    = '#22C55E'  // vert  — 0 à 30 min depuis dernière étape
+const COULEUR_ORANGE  = '#F97316'  // orange — 30 à 40 min
+const COULEUR_ROUGE   = '#EF4444'  // rouge  — > 40 min
 
-// Couleurs d'urgence
-const COULEUR_WARN   = '#F97316'  // orange vif
-const COULEUR_ALERTE = '#F87171'  // rouge moyen
+const SEUIL_ORANGE = 30  // minutes simulées
+const SEUIL_ROUGE  = 40
 
 // Libellés français des statuts
 const LIBELLE_STATUT = {
@@ -57,26 +50,25 @@ const SEUILS = {
   ADDITION:       8,
 }
 
-// ─── Calcul urgence locale à partir de simTime ───────────────────────────────
-// Retourne { niveau: 'ok'|'warn'|'alerte', minutes }
+// ─── Calcul chrono depuis la dernière étape ───────────────────────────────────
+// Retourne { minutes, niveau: 'ok'|'warn'|'alerte' } (niveau conservé pour HaloAlerte)
 function calcUrgence(visite, simTime) {
   if (!visite || !simTime) return { niveau: 'ok', minutes: 0 }
-  const { statut, etapes } = visite
-  const seuil = SEUILS[statut]
-  if (!seuil || !etapes[statut]) return { niveau: 'ok', minutes: 0 }
-  const minutes = Math.floor((simTime - etapes[statut]) / 60000)
-  const pct = minutes / seuil
+  const ts = visite.etapes[visite.statut]
+  if (!ts) return { niveau: 'ok', minutes: 0 }
+  const minutes = Math.floor((simTime - ts) / 60000)
   return {
     minutes,
-    niveau: pct >= 1 ? 'alerte' : pct >= 0.75 ? 'warn' : 'ok',
+    niveau: minutes >= SEUIL_ROUGE ? 'alerte' : minutes >= SEUIL_ORANGE ? 'warn' : 'ok',
   }
 }
 
 // ─── Couleur principale d'une table ──────────────────────────────────────────
 function couleurTable(statut, urgence) {
-  if (urgence.niveau === 'alerte') return COULEUR_ALERTE
-  if (urgence.niveau === 'warn')   return COULEUR_WARN
-  return COULEUR_STATUT[statut] ?? COULEUR_STATUT.LIBRE
+  if (statut === 'LIBRE') return COULEUR_LIBRE
+  if (urgence.minutes >= SEUIL_ROUGE)  return COULEUR_ROUGE
+  if (urgence.minutes >= SEUIL_ORANGE) return COULEUR_ORANGE
+  return COULEUR_VERT
 }
 
 // ─── Parquet en lames ────────────────────────────────────────────────────────
@@ -562,24 +554,6 @@ function FileAttente({ visites }) {
 
   return (
     <group>
-      {/* Barrières de guidage (velours rouge stylisé) */}
-      {[0, 1, 2].map(c => (
-        <group key={`bar${c}`}>
-          {/* Rail horizontal */}
-          <mesh position={[-7.5 - c * LARGEUR_COULOIR, 0.45, (Z_MIN + Z_MAX) / 2]}>
-            <boxGeometry args={[0.04, 0.04, LONGUEUR + 0.3]} />
-            <meshStandardMaterial color="#DC2626" roughness={0.4} metalness={0.6} />
-          </mesh>
-          {/* Poteaux aux extrémités */}
-          {[Z_MIN - 0.1, Z_MAX + 0.1].map((z, pi) => (
-            <mesh key={pi} position={[-7.5 - c * LARGEUR_COULOIR, 0.25, z]}>
-              <cylinderGeometry args={[0.04, 0.04, 0.5, 8]} />
-              <meshStandardMaterial color="#B45309" roughness={0.5} metalness={0.5} />
-            </mesh>
-          ))}
-        </group>
-      ))}
-
       {/* Personnes en serpentin sur le trottoir */}
       {tousLesGens.map((g, i) => (
         <ClientFile
